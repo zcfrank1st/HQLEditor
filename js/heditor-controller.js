@@ -47,4 +47,5 @@ angular
         $scope.exportQ = function() {
             // TODO 通过 id 进行下载  此处只需要URL即可，ng-click可以删除
         };
-    });
+    })
+    .controller('tableController', function () {});
