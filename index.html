@@ -1,0 +1,221 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <link href="./lib/ace/css/bootstrap.min.css" rel="stylesheet" />
+    <link rel="stylesheet" href="./lib/ace/css/font-awesome.min.css" />
+    <link rel="stylesheet" href="http://fonts.googleapis.com/css?family=Open+Sans:400,300" />
+
+    <!-- ace styles -->
+    <link rel="stylesheet" href="./lib/ace/css/ace.min.css" />
+    <link rel="stylesheet" href="./lib/ace/css/ace-rtl.min.css" />
+    <link rel="stylesheet" href="./lib/ace/css/ace-skins.min.css" />
+
+    <!--    <link rel="stylesheet" href="./lib/css/jquery-ui-1.10.3.full.min.css" />-->
+    <link rel="stylesheet" href="./css/navbar-multi-dropdown.css">
+
+    <!--  code mirror  -->
+    <link rel="stylesheet" href="./lib/codeMirror/css/docs.css" />
+    <link rel="stylesheet" href="./lib/codeMirror/css/codemirror.css" />
+    <link rel="stylesheet" href="./lib/codeMirror/css/show-hint.css" />
+    <link rel="stylesheet" href="./lib/codeMirror/css/paraiso-light.css" />
+
+    <link rel="stylesheet" href="css/view.css" />
+</head>
+
+<body ng-app="heditor">
+    <div datadp-navbar></div>
+
+    <div class="main-container" id="main-container">
+        <div class="main-container-inner">
+            <a class="menu-toggler" id="menu-toggler">
+                <span class="menu-text"></span>
+            </a>
+
+            <div class="sidebar" id="sidebar">
+                <script type="text/javascript">
+                    try {
+                        ace.settings.check('sidebar', 'fixed')
+                    } catch (e) {}
+                </script>
+
+                <div class="sidebar-shortcuts" id="sidebar-shortcuts">
+                    <div class="sidebar-shortcuts-large" id="sidebar-shortcuts-large">
+                        <label class="label label-yellow label-lg arrowed arrowed-right">Hive Web</label>
+                    </div>
+                </div>
+                <!-- #sidebar-shortcuts -->
+
+
+                <ul class="nav nav-list">
+                    <li>
+                        <a href="#" target="_self">
+                            <i class="icon-search"></i>
+                            <span class="menu-text"> 在线查询 </span>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="">
+                            <i class="icon-copy"></i>
+                            <span class="menu-text"> 历史记录 </span>
+                        </a>
+                    </li>
+                </ul>
+                <!-- /.nav-list -->
+
+                <div class="sidebar-collapse" id="sidebar-collapse">
+                    <i class="icon-double-angle-left" data-icon1="icon-double-angle-left" data-icon2="icon-double-angle-right"></i>
+                </div>
+
+                <script type="text/javascript">
+                    try {
+                        ace.settings.check('sidebar', 'collapsed')
+                    } catch (e) {}
+                </script>
+            </div>
+            <div class="main-content">
+                <div class="breadcrumbs" id="breadcrumbs">
+                    <script type="text/javascript">
+                        try {
+                            ace.settings.check('breadcrumbs', 'fixed')
+                        } catch (e) {}
+                    </script>
+
+                    <ul class="breadcrumb">
+                        <li>
+                            <i class="icon-home home-icon"></i>
+                            <a href="#" target="_self">Hive Web</a>
+                        </li>
+                        <li class="active">在线查询</li>
+                    </ul>
+                    <!-- .breadcrumb -->
+                </div>
+                <div class="page-content" ng-controller="editorController">
+                    <div class="row">
+                        <div class="col-xs-8">
+                            <div class="widget-box">
+                                <div class="widget-header">
+                                    <h4>
+                                        <i class="icon-terminal"></i>
+                                        编辑器
+                                        <div class="pull-right">
+                                        <span class="btn btn-purple btn-minier tooltip-info" data-rel="popover" data-placement="top" title="<i class='icon-lightbulb purple'></i> 提示" data-content="<div class='text-primary'><h6>在编辑器中按下Ctrl+Space,可对sql关键字进行提示~ </h6></div>"><i class="icon-lightbulb"></i>提示</span>
+                                        <a class="btn btn-inverse btn-minier" ng-click="clearContent();"><i class="icon-undo"></i>清空</a>
+                                        </div>
+                                    </h4>
+                                </div>
+                                <div class="widget-body">
+                                    <div class="widget-main">
+                                        <form>
+                                            <textarea id="code" name="code"></textarea>
+                                        </form>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="col-sm-4">
+
+                            <div class="widget-box">
+                                <div class="widget-header">
+                                    <h4 class="smaller">
+                                    <i class="icon-comments-alt"></i>
+                                    执行过程</h4>
+                                </div>
+                                <div class="widget-body">
+                                    <div class="widget-main">
+                                        <textarea id="infout" disabled style="border:none;"></textarea>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="widget-box">
+                                <div class="widget-header">
+                                    <h4 class="smaller">
+                                    <i class="icon-cogs"></i>
+                                    查询操作</h4>
+                                </div>
+                                <div class="widget-body">
+                                    <div class="widget-main">
+                                        <div class="center">
+                                            <a class="btn btn-info btn-sm" style="width:30%;" ng-click="startQ();">开始查询</a>
+                                            <a class="btn btn-danger btn-sm" style="width:30%;" ng-click="stopQ();">停止查询</a>
+                                            <a class="btn btn-success btn-sm" style="width:30%;" ng-click="exportQ();">结果导出</a>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="row">
+                        <div class="col-sm-12">
+                            <h3 class="row header smaller lighter blue">
+                                <span class="col-xs-2"><i class="icon-info"></i>
+                                    &nbsp;查询结果
+                                </span>
+                            </h3>
+                        </div>
+                    </div>
+
+                    <div class="row">
+                        <div class="center" ng-show="raphealSpinner">
+                            <div id="holder"></div>
+                            <div class="text-info">正在查询中，请稍候~</div>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="./lib/ace/js/ace-extra.min.js"></script>
+    <script src="./lib/ace/js/jquery-2.0.3.min.js"></script>
+
+    <script type="text/javascript">
+        if ("ontouchend" in document) document.write("<script src='./lib/ace/js/jquery.mobile.custom.min.js'>" + "<" + "script>");
+    </script>
+    <script src="./lib/ace/js/bootstrap.min.js"></script>
+    <script src="./lib/ace/js/typeahead-bs2.min.js"></script>
+
+    <!-- page specific plugin scripts -->
+    <!--[if lte IE 8]>
+<script src="../libs/ace/1.2/js/excanvas.min.js"></script>
+<![endif]-->
+
+    <script src="./lib/ace/js/jquery-ui-1.10.3.full.min.js"></script>
+    <script src="./lib/ace/js/jquery.ui.touch-punch.min.js"></script>
+    <script src="./lib/ace/js/jquery.slimscroll.min.js"></script>
+    <script src="./lib/ace/js/jquery.easy-pie-chart.min.js"></script>
+    <script src="./lib/ace/js/jquery.sparkline.min.js"></script>
+    <script src="./lib/ace/js/flot/jquery.flot.min.js"></script>
+    <script src="./lib/ace/js/flot/jquery.flot.pie.min.js"></script>
+    <script src="./lib/ace/js/flot/jquery.flot.resize.min.js"></script>
+    <script src="./lib/ace/js/jquery.dataTables.min.js"></script>
+    <script src="./lib/ace/js/jquery.dataTables.bootstrap.js"></script>
+
+
+    <!-- ace scripts -->
+    <script src="./lib/ace/js/ace-elements.min.js"></script>
+    <script src="./lib/ace/js/ace.min.js"></script>
+
+    <!--  codeEdit  -->
+    <script src="./lib/codeMirror/js/codemirror.js"></script>
+    <script src="./lib/codeMirror/js/closebrackets.js"></script>
+    <script src="./lib/codeMirror/js/show-hint.js"></script>
+    <script src="./lib/codeMirror/js/sql-hint.js"></script>
+    <script src="./lib/codeMirror/js/sql.js"></script>
+    <script src="./lib/codeMirror/js/active-line.js"></script>
+
+    <!--  rephael  -->
+    <script src="./lib/raphael/raphael-min.js"></script>
+
+    <!--  angular  -->
+    <script src="./lib/angular/angular.min.js"></script>
+    <script src="js/heditor.js"></script>
+    <script src="js/heditor-utils.js"></script>
+    <script src="js/heditor-controller.js"></script>
+    <script src="js/heditor-directive.js"></script>
+</body>
+
+</html>
