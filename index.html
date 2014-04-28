@@ -55,7 +55,7 @@
                         </a>
                     </li>
                     <li>
-                        <a href="">
+                        <a href="#/history">
                             <i class="icon-copy"></i>
                             <span class="menu-text"> 历史记录 </span>
                         </a>
@@ -90,81 +90,8 @@
                     </ul>
                     <!-- .breadcrumb -->
                 </div>
-                <div class="page-content" ng-controller="editorController">
-                    <div class="row">
-                        <div class="col-xs-8">
-                            <div class="widget-box">
-                                <div class="widget-header">
-                                    <h4>
-                                        <i class="icon-terminal"></i>
-                                        编辑器
-                                        <div class="pull-right">
-                                        <span class="btn btn-purple btn-minier tooltip-info" data-rel="popover" data-placement="top" title="<i class='icon-lightbulb purple'></i> 提示" data-content="<div class='text-primary'><h6>在编辑器中按下Ctrl+Space,可对sql关键字进行提示~ </h6></div>"><i class="icon-lightbulb"></i>提示</span>
-                                        <a class="btn btn-inverse btn-minier" ng-click="clearContent();"><i class="icon-undo"></i>清空</a>
-                                        </div>
-                                    </h4>
-                                </div>
-                                <div class="widget-body">
-                                    <div class="widget-main">
-                                        <form>
-                                            <textarea id="code" name="code"></textarea>
-                                        </form>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-
-                        <div class="col-sm-4">
-
-                            <div class="widget-box">
-                                <div class="widget-header">
-                                    <h4 class="smaller">
-                                    <i class="icon-comments-alt"></i>
-                                    执行过程</h4>
-                                </div>
-                                <div class="widget-body">
-                                    <div class="widget-main">
-                                        <textarea id="infout" disabled style="border:none;"></textarea>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="widget-box">
-                                <div class="widget-header">
-                                    <h4 class="smaller">
-                                    <i class="icon-cogs"></i>
-                                    查询操作</h4>
-                                </div>
-                                <div class="widget-body">
-                                    <div class="widget-main">
-                                        <div class="center">
-                                            <a class="btn btn-info btn-sm" style="width:30%;" ng-click="startQ();">开始查询</a>
-                                            <a class="btn btn-danger btn-sm" style="width:30%;" ng-click="stopQ();">停止查询</a>
-                                            <a class="btn btn-success btn-sm" style="width:30%;" ng-click="exportQ();">结果导出</a>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-
-                    <div class="row">
-                        <div class="col-sm-12">
-                            <h3 class="row header smaller lighter blue">
-                                <span class="col-xs-2"><i class="icon-info"></i>
-                                    &nbsp;查询结果
-                                </span>
-                            </h3>
-                        </div>
-                    </div>
-
-                    <div class="row">
-                        <div class="center" ng-show="raphealSpinner">
-                            <div id="holder"></div>
-                            <div class="text-info">正在查询中，请稍候~</div>
-                        </div>
-                    </div>
-
-                </div>
+                
+                <div ng-view></div>
             </div>
         </div>
     </div>
@@ -212,7 +139,9 @@
 
     <!--  angular  -->
     <script src="./lib/angular/angular.min.js"></script>
+    <script src="./lib/angular/angular-route.min.js"></script>
     <script src="js/heditor.js"></script>
+    <script src="js/heditor-route.js"></script>
     <script src="js/heditor-utils.js"></script>
     <script src="js/heditor-controller.js"></script>
     <script src="js/heditor-directive.js"></script>

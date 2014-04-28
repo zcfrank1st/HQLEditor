@@ -1,1 +1,1 @@
-angular.module('heditor', ['heditorCtrl', 'heditorDirect']);
+angular.module('heditor', ['heditorCtrl', 'heditorDirect', 'heditorRoute']);
